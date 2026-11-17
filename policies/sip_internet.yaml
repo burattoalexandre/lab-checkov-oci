@@ -1,0 +1,18 @@
+metadata:
+  id: "CKV2_VOIP_1"
+  name: "Garantir que o SIP (UDP 5060) nao esteja aberto para a internet"
+  category: "NETWORKING"
+definition:
+  or:
+    - cond_type: attribute
+      resource_types:
+        - oci_core_network_security_group_security_rule
+      attribute: source
+      operator: not_equals
+      value: "0.0.0.0/0"
+    - cond_type: attribute
+      resource_types:
+        - oci_core_network_security_group_security_rule
+      attribute: udp_options.destination_port_range.min
+      operator: not_equals
+      value: 5060
